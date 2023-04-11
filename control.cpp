@@ -1,7 +1,33 @@
+/*
+The first function is an interrupt service routine 
+(ISR) called PCINT2_vect. It is triggered when one 
+of the pins on port D (D4, D5, D6, D7) changes state. 
+Depending on the pin that caused the interrupt, 
+the function updates one of four variables with 
+the time since the last interrupt. These variables 
+are used in the second function to calculate desired 
+angle rates for the drone.
+
+The second function is called map_radio_channels_to_angle_rates(). 
+It takes the radio channel commands (values stored in an array 
+called radioChannelCommands) and calculates desired angle rates 
+for the X, Y, and Z axes based on these commands. The calculations 
+involve some scaling and reversing, and there are upper and lower 
+bounds for each axis to limit the range of the values. The desired 
+angle rates are then stored in three variables: desired_angle_rate_x, 
+desired_angle_rate_y, and desired_angle_rate_z.
+
+The third function is called check_for_motor_arm(). It checks if 
+the throttle value is above a certain threshold, and if so, it 
+checks if the yaw value is within a certain range. If the yaw 
+value is within this range, it sets a flag called motorArmed to 
+true. Otherwise, it sets the flag to false.
+*/
+
 ISR(PCINT2_vect){
     current_count = micros();
   
-    if(PIND & B00100000 ){                         // pin D4 --> B00010000  CH 1   PITCH                                        
+    if(PIND & B00100000 ){     // pin D4 --> B00010000  CH 1   PITCH                                        
       if(CH1_LS == 0){                                               
         CH1_LS = 1;                                                   
         counter_1 = current_count;                                             
@@ -12,7 +38,7 @@ ISR(PCINT2_vect){
       radioChannelCommands[PITCH] = current_count - counter_1;                       
     }
   
-    if(PIND & B00010000){                          //pin D5 --> B00100000   CH 2    ROLL
+    if(PIND & B00010000){     // pin D5 --> B00100000   CH 2    ROLL
       if(CH2_LS == 0){                      
         CH2_LS = 1;                     
         counter_2 = current_count;             
@@ -23,7 +49,7 @@ ISR(PCINT2_vect){
       radioChannelCommands[ROLL] = current_count - counter_2; 
     }
   
-    if(PIND & B10000000 ){                         //pin D7 --> B10000000  CH 3      THROTTLE                                
+    if(PIND & B10000000 ){     // pin D7 --> B10000000  CH 3      THROTTLE                                
       if(CH3_LS == 0){                                             
         CH3_LS = 1;                                                  
         counter_3 = current_count;                                               
@@ -35,7 +61,7 @@ ISR(PCINT2_vect){
   
     }
    
-    if(PIND & B01000000 ){                          //pin D6  --> B10000000  CH 4     YAW          
+    if(PIND & B01000000 ){      // pin D6  --> B10000000  CH 4     YAW          
       if(CH4_LS == 0){                                               
         CH4_LS = 1;                                                   
         counter_4 = current_count;                                              

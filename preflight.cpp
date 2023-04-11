@@ -1,3 +1,33 @@
+/*
+startup(): This function initializes the pins of the microcontroller 
+that are connected to the electronic speed controllers (ESCs) and 
+the alarm LED. The ESCs are set as output pins, and the alarm LED 
+is set to low initially.
+
+interrupt_registers_startup(): This function configures the Pin Change 
+Interrupt (PCI) feature of the microcontroller to detect changes in 
+the input pins that are connected to the radio receiver channels. 
+The PCI is enabled for PCMSK2, and four channels (Pitch, Roll, Yaw, and Throttle) 
+are set to trigger on state change.
+
+motors_startup(): This function is used to initialize the ESCs. It sends 
+a pulse to each ESC for 500 iterations, with a pulse width of 1ms followed 
+by a delay of 3ms.
+
+check_gyro_coherence(): This function checks whether the values of the 
+gyroscope's minimum and maximum ranges are within the expected values 
+based on the gyroscope's prescaler value and the selected gyro range.
+
+security_check(): This function performs various checks to ensure that 
+the system is in a safe state before arming the motors. It checks 
+several parameters, such as the pulse width values for various signals, 
+the direction of the gyroscope data, and the maximum gyro rate.
+
+Overall, these functions are used to initialize and configure the 
+microcontroller, check the consistency of the gyroscope data, and 
+ensure the system is safe before arming the motors.
+*/
+
 void startup(){
 
   pinMode(CH1_PIN, INPUT);                                                        //Set DDR (Data Direction Register) as INPUT

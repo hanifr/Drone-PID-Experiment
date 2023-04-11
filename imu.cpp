@@ -1,3 +1,31 @@
+/*
+void initialize_imu(): This function initializes the IMU 
+by sending various commands to the MPU-6050 chip over I2C. 
+It sets the wake-up register to 0, sets the full-scale 
+range of the gyroscope to 500 degrees per second, sets 
+the digital low-pass filter to a cutoff frequency of 
+approximately 43 Hz, and performs some consistency checks 
+to make sure that the settings were applied correctly.
+
+void calibrate_imu(): This function calibrates the gyroscope 
+by taking a number of samples of the gyroscopic data and 
+computing an offset value for each axis based on the average 
+of the samples. It uses the Wire library to communicate with 
+the MPU-6050 chip over I2C and stores the offset values in 
+the Gyro_raw_error_x, Gyro_raw_error_y, and Gyro_raw_error_z 
+variables.
+
+void read_imu(): This function reads the gyroscopic data from 
+the MPU-6050 chip and calculates the angular rotation rates 
+around each of the three axes. It subtracts the offset values 
+calculated during the calibration step and applies some scaling 
+factors to convert the raw gyro data to degrees per second. 
+Finally, it filters the data to remove high-frequency noise 
+by averaging the previous value with the current value. The 
+filtered data is then used as input to the PID controllers 
+for pitch, roll, and yaw stabilization.
+*/
+
 void initialize_imu() {
 
   Wire.begin();                                                                   //comunication start

@@ -1,3 +1,25 @@
+/*
+This code defines two functions, reset_pid() and calculate_pid(), 
+which are used to control a quadcopter's flight through a 
+PID (Proportional-Integral-Derivative) controller.
+
+The reset_pid() function resets the integral and previous error values 
+for the PID controller.
+
+The calculate_pid() function calculates the error values for the 
+PID controller based on the desired angle rates and the actual gyro rates, 
+and then calculates the proportional, integral, and derivative components 
+of the controller. It also performs normalization on the output values 
+to ensure they are within the specified bounds. Finally, it updates 
+the previous error values for use in the next cycle.
+
+The code assumes that there are four motors on the quadcopter, and 
+it calculates the appropriate PWM (Pulse-Width Modulation) values 
+for each motor based on the output of the PID controller and the 
+current throttle value. The speed values for each motor are then 
+normalized to ensure they are within the specified bounds.
+*/
+
 void reset_pid(){
     
         pid_i_x = 0;                                    
