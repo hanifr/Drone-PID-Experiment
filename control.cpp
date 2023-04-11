@@ -24,7 +24,9 @@ value is within this range, it sets a flag called motorArmed to
 true. Otherwise, it sets the flag to false.
 */
 
-ISR(PCINT2_vect){
+/* https://forum.arduino.cc/t/struggling-to-have-isr-pcint2_vect-trigger-a-class-function/390909/13 */
+
+ISR(PCINT2_vect) {
     current_count = micros();
   
     if(PIND & B00100000 ){     // pin D4 --> B00010000  CH 1   PITCH                                        

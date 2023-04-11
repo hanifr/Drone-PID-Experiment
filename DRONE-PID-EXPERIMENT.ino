@@ -89,7 +89,7 @@
                                                                                         //
   float kp_yaw   = 2.00;                                                                //
   float ki_yaw   = 0.02;                                                                //
-  float kd_yaw   = 0.00;                                                                //     good parameter choice allow to not have derivative on yaw because Z axis already has enought friction with propellers spin                                               
+  float kd_yaw   = 0.00;                                                                //     good parameter choice allow to not have derivative on yaw because Z axis already has enough friction with propellers spin                                               
                                                                                         //
 //////////////////////////////////////////////////////////////////////////////////////////
 
